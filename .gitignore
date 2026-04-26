@@ -1,0 +1,36 @@
+# Sous-buckets (chacun a son propre repo git)
+studio_descartes/
+oscardcstudio/
+
+# Junction inverse vers user scope (~/.claude/)
+.claude-user/
+
+# Deps / build
+node_modules/
+__pycache__/
+*.pyc
+dist/
+build/
+.next/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.json
+
+# Logs
+*.log
+.push-all.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp

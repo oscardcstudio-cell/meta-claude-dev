@@ -1,0 +1,64 @@
+# .claudeignore — cross-bucket (SD + oscardcstudio)
+# Empeche Claude de charger ces dossiers/fichiers dans son contexte.
+# Syntaxe = .gitignore.
+
+# Deps
+node_modules/
+__pycache__/
+.venv/
+venv/
+.pnpm-store/
+
+# Build / dist
+dist/
+build/
+.next/
+out/
+.cache/
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets/
+
+# Logs
+*.log
+logs/
+logs.txt
+
+# Binaires / assets lourds
+*.psd
+*.ai
+*.sketch
+*.fig
+*.blend
+*.fbx
+*.obj
+*.glb
+*.gltf
+*.usd
+*.usdz
+*.exr
+*.tiff
+*.mp4
+*.mov
+*.zip
+*.rar
+
+# Backups / archives Claude
+*.backup
+*.bak
+.claude.json.backup.*
+
+# Worktrees (metadata)
+.git/worktrees/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
