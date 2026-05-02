@@ -53,6 +53,9 @@ Deux comptes GitHub distincts sur cette machine :
 
 **Auto-push active** : apres un commit significatif, `git push` direct sans demander confirmation. Oscar fait confiance pour juger le bon moment (fin d'etape, refactor propre, ajout de fichiers coherent).
 
+### Compaction
+Quand Claude compresse une longue session, toujours conserver : liste complète des fichiers modifiés, commandes de test actives, décisions non committées.
+
 ### Optimisation tokens (cross-projet)
 - Ne pas relire un fichier deja lu dans la meme conversation sans raison
 - Preferer `Grep` / `Glob` cibles aux lectures de repertoires entiers
