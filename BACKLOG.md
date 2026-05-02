@@ -43,6 +43,35 @@ Si un projet recommence a accumuler du bruit dans son `settings.local.json`, ouv
 
 ---
 
+---
+
+## 5. Prompt caching — audit apps API
+
+**Etat** : à faire.
+**Fichiers** : `subvention_match/server/`, `studio-descartes-slack-bot/index.ts`
+
+Vérifier que le system prompt ne change pas à chaque requête (date injectée, état utilisateur). Si oui → déplacer le contenu dynamique dans les messages, garder le system prompt stable. Impact : cache hit rate + coût + latence.
+
+---
+
+## 6. Tool result clearing — sessions longues
+
+**Etat** : à configurer.
+**Fichiers** : `.claude/settings.json` des projets actifs (Auto-Polymarket, SubventionMatch)
+
+Configurer `exclude_tools: ["memory"]` pour que les anciens résultats d'outils (lectures de fichiers massives) soient vidés en gardant la mémoire persistante. Utile quand les sessions dépassent régulièrement 50k tokens.
+
+---
+
+## 7. CLAUDE.md sous-dossiers SD sensibles
+
+**Etat** : partiellement fait (SubventionMatch `server/` done). SD manque.
+**Fichiers** : `studio-descartes-centre-appel/agent/`, `studio-descartes-centre-appel/borne/`
+
+Ajouter un `CLAUDE.md` dans `agent/` (règles ElevenLabs sync + validation philosophe obligatoire) et `borne/` (specs hardware B2B, ne pas modifier sans brief client).
+
+---
+
 ## Changelog
 
 - **2026-04-25** : Creation du backlog apres audit infra. Migration `studio_descartes` finalisee, hooks installes, meta-agents crees, settings consolides. 18 -> 4 settings.local.json. Worktrees orphelins purges.
