@@ -64,6 +64,81 @@ Deux comptes GitHub distincts sur cette machine :
 - Preferer editer un fichier existant que d'en creer un nouveau
 - Pas de commentaires de code inutiles (le nom des fonctions suffit)
 
+## Context Engineering — doctrine transverse
+
+Le **context engineering** est la discipline de rendre le codebase navigable et lisible pour les agents Claude, afin de reduire les erreurs, les lectures inutiles, et les regressions silencieuses. C'est un domaine etabli (Martin Fowler, Anthropic engineering blog, standard `llms.txt`).
+
+Origine sur ce repo : audit de lisibilite Auto-Polymarket (mai 2026). Toutes les regles ci-dessous s'appliquent a **tout projet actif** sauf mention contraire.
+
+### Les 5 standards a respecter dans chaque projet
+
+**1. CLAUDE.md precis**
+- Chaque fichier critique (> 300 lignes) liste avec sa vraie responsabilite — pas ce qu'on pensait qu'il faisait
+- La description doit reflechir ou la logique se trouve REELLEMENT (`engine.js` ne fait pas le sizing si le sizing est dans `sizeCalc.js`)
+- Quand un nouveau fichier critique est cree → l'ajouter au CLAUDE.md dans le meme commit
+
+**2. `llms.txt` a la racine du repo**
+Fichier de navigation pour tout agent arrivant a froid (remote agent, nouveau contexte). Different de CLAUDE.md : CLAUDE.md = instructions, `llms.txt` = carte.
+Template minimal :
+```markdown
+# Nom du projet
+> Description en 1 ligne
+
+## Vue d'ensemble
+- [CLAUDE.md](CLAUDE.md): Instructions completes pour Claude Code (architecture, regles, fichiers critiques, gotchas)
+
+## Fichiers critiques
+- [src/xxx.js](src/xxx.js): Role precis du fichier
+- [src/yyy.js](src/yyy.js): Role precis du fichier
+
+## Points non-evidents (gotchas)
+- Invariant 1 a connaitre avant de toucher au code
+- Invariant 2
+```
+Adoption : Anthropic, Cloudflare, Stripe. Standard propose par Answer.AI (sept. 2024).
+
+**3. Index de sections dans les fichiers > 2000 lignes**
+Tout fichier > 2000 lignes avec plusieurs responsabilites → bloc de commentaires en tete avec numeros de lignes approximatifs et role de chaque bloc. Voir `src/logic/shadowTrading.js` dans Auto-Polymarket comme modele.
+
+**4. Commentaires sur code desactive intentionnellement**
+Tout bloc desactive en dur (`if (false)`, feature flag off, dead branch) → commentaire visible expliquant POURQUOI et qui decide de le reactiver. Sans ca Claude peut le lire comme actif et baser une modification dessus.
+
+**5. Audit de lisibilite periodique**
+Routine schedulee hebdomadaire sur les projets actifs qui detecte : nouveaux fichiers > 300 lignes non documentes, fichiers > 2000 lignes sans index, descriptions obsoletes.
+Modele de routine : Auto-Polymarket `trig_0198tTQrATeMpeBEgaifUNqR` (lundi 8h Paris).
+Quand un audit remonte des corrections universelles → les remonter ici, pas les garder dans le CLAUDE.md projet.
+
+### Outils utiles
+
+| Outil | Usage | Lien |
+|-------|-------|------|
+| **Repomix** | Packager tout le repo en un fichier AI-friendly pour analyse globale ponctuelle | https://repomix.com |
+| **Claude Context MCP** | Recherche semantique sur le codebase (~40% reduction tokens vs grep manuel) | https://github.com/zilliztech/claude-context |
+| `gsd:map-codebase` | Audit ponctuel complet (skill local) | — |
+
+### Propagation vers les projets existants
+
+**Deux niveaux de propagation — a faire dans l'ordre :**
+
+**Niveau 1 — automatisable (llms.txt)** : peut etre applique par un remote agent sur n'importe quel repo sans connaissance metier. A faire en premier sur tous les projets.
+→ Lancer depuis n'importe ou : "cree le llms.txt pour le projet X (repo GitHub : URL)"
+
+**Niveau 2 — necessite contexte projet (audit complet)** : verification CLAUDE.md vs code reel, index de sections sur les gros fichiers, audit des descriptions. Necessite d'etre dans le projet.
+→ A faire projet par projet : ouvrir le projet, dire "applique le context engineering selon les standards du meta CLAUDE.md"
+
+**Checklist par projet (a cocher a chaque nouveau projet ou audit annuel) :**
+- [ ] `llms.txt` present a la racine
+- [ ] Tous les fichiers > 300 lignes listes dans CLAUDE.md avec description precise
+- [ ] Fichiers > 2000 lignes avec index de sections en tete
+- [ ] Blocs desactives commentes
+- [ ] Routine d'audit schedulee (si projet actif avec commits reguliers)
+
+**Projets a passer en context engineering (mai 2026) :**
+- [x] Auto-Polymarket — fait (mai 2026)
+- [ ] subvention_match
+- [ ] Sync-Play
+- [ ] Repos Studio Descartes actifs
+
 ## Meta-agents (moteurs cross-projets)
 
 Les **meta-agents generiques** vivent dans `C:\Users\oscar\.claude\agents\` (user scope, charges automatiquement par Claude Code dans tous les projets) :
@@ -89,6 +164,17 @@ Tous les dashboards, interfaces HTML, vues visuelles et mini-apps construits sur
 - **Push all global** : TODO — a creer a la racine si Oscar le demande un jour
 
 Claude ne lance `push-all` qu'a la demande explicite d'Oscar ou en fin de session significative.
+
+## Sante infra IA (cross-projet)
+
+Tous les projets respectent les regles definies dans `CLAUDE_HEALTH_RULES.md` (meme niveau que ce fichier).
+
+- **Avant de creer ou modifier un CLAUDE.md** → consulter `CLAUDE_HEALTH_RULES.md` (seuils, patterns `@import`, anti-patterns).
+- **Hook auto** : `~/.claude/hooks/claude-md-health-check.js` (SessionStart) alerte si un projet derive (taille, residus, MEMORY.md absent, gros fichiers sans `.claudeignore`).
+- **Audit profond manuel** : skill `claude-config-doctor` quand le hook signale critical.
+- **Skills officiels** : `claude-md-management:claude-md-improver` pour refactor de CLAUDE.md, `revise-claude-md` pour update post-session.
+
+Pas d'`@import` automatique de `CLAUDE_HEALTH_RULES.md` ici — sinon il gonfle le contexte de tous les projets, l'inverse du but. Lecture a la demande.
 
 ## Scoping / separation stricte
 
