@@ -72,6 +72,19 @@ Ajouter un `CLAUDE.md` dans `agent/` (règles ElevenLabs sync + validation philo
 
 ---
 
+---
+
+## Convention BACKLOG par projet
+
+Chaque repo peut avoir son propre `BACKLOG.md` à la racine. Format identique à ce fichier (sections `##`). Le hook `backlog-reminder.js` (UserPromptSubmit) rappelle automatiquement les items actifs une fois par jour quand on ouvre Claude dans ce dossier.
+
+**Item actif** : section `##` sans `**Etat** : fait/annulé` dans le corps.
+**Item terminé** : ajouter `**Etat** : fait` dans la section, ou préfixer le titre par `~~Titre~~`.
+**Ajouter un item** : dire "ajoute ça au backlog" en fin de conversation.
+
+---
+
 ## Changelog
 
+- **2026-05-02** : Hook backlog-reminder.js installé (UserPromptSubmit, une fois/jour par projet). Convention documentée.
 - **2026-04-25** : Creation du backlog apres audit infra. Migration `studio_descartes` finalisee, hooks installes, meta-agents crees, settings consolides. 18 -> 4 settings.local.json. Worktrees orphelins purges.
