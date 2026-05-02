@@ -1,0 +1,18 @@
+# meta-claude-dev
+> Configuration et doctrine IA transverse — toute la machine Oscar (Studio Descartes + projets perso).
+
+## Vue d'ensemble
+- [CLAUDE.md](CLAUDE.md): Instructions cross-projets : git multi-compte, doctrine context engineering, meta-agents génériques, dashboards registry, push-all
+- [CLAUDE_HEALTH_RULES.md](CLAUDE_HEALTH_RULES.md): Règles de santé des fichiers CLAUDE.md (seuils, anti-patterns, hook auto)
+- [SETUP_NOUVEL_ORDI.md](SETUP_NOUVEL_ORDI.md): Procédure d'installation complète d'une nouvelle machine
+
+## Structure
+- [studio_descartes/](studio_descartes/): Bucket entreprise SD — repos + meta SD
+- [oscardcstudio/](oscardcstudio/): Bucket perso — repos junctions Windows vers `C:\Users\oscar\`
+- [push-all-global.sh](push-all-global.sh): Push tous les repos SD + perso en une commande
+
+## Points non-évidents
+- Les dossiers `oscardcstudio/` sont des **junctions Windows** (pas des clones réels) vers `C:\Users\oscar\...`
+- Deux comptes GitHub distincts : `StudioDescartes` pour SD, `oscardcstudio-cell` pour tout le reste — vérifier le remote avant push
+- Ce repo lui-même est sur le compte perso (`oscardcstudio-cell/meta-claude-dev`), pas SD
+- `~/.claude/agents/meta-*.md` sont les moteurs génériques chargés automatiquement dans TOUS les projets
