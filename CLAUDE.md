@@ -135,9 +135,12 @@ Quand un audit remonte des corrections universelles → les remonter ici, pas le
 
 **Projets a passer en context engineering (mai 2026) :**
 - [x] Auto-Polymarket — fait (mai 2026)
-- [ ] subvention_match
-- [ ] Sync-Play
-- [ ] Repos Studio Descartes actifs
+- [x] subvention_match — llms.txt ajouté (mai 2026)
+- [x] Sync-Play — llms.txt ajouté (mai 2026)
+- [x] Repos Studio Descartes actifs — llms.txt ajouté sur tous les repos + meta (mai 2026)
+- [x] meta-claude-dev — llms.txt ajouté (mai 2026)
+
+> Niveau 1 (llms.txt) : 100% des projets couverts. Niveau 2 (audit CLAUDE.md vs code réel) : à faire projet par projet.
 
 ## Meta-agents (moteurs cross-projets)
 
