@@ -56,6 +56,9 @@ Deux comptes GitHub distincts sur cette machine :
 ### Compaction
 Quand Claude compresse une longue session, toujours conserver : liste complète des fichiers modifiés, commandes de test actives, décisions non committées.
 
+### Propagation de gotchas cross-projet
+Si une leçon/piège technique appris sur un projet peut affecter d'autres projets de la machine → l'ajouter dans [`GOTCHAS.md`](GOTCHAS.md) (même dossier que ce fichier). Ne pas mettre de détails techniques dans CLAUDE.md.
+
 ### Optimisation tokens (cross-projet)
 - Ne pas relire un fichier deja lu dans la meme conversation sans raison
 - Preferer `Grep` / `Glob` cibles aux lectures de repertoires entiers

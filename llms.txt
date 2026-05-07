@@ -11,6 +11,9 @@
 - [oscardcstudio/](oscardcstudio/): Bucket perso — repos junctions Windows vers `C:\Users\oscar\`
 - [push-all-global.sh](push-all-global.sh): Push tous les repos SD + perso en une commande
 
+## Gotchas cross-projets
+- [GOTCHAS.md](GOTCHAS.md): Pièges techniques découverts sur un projet et applicables à toute la machine
+
 ## Points non-évidents
 - Les dossiers `oscardcstudio/` sont des **junctions Windows** (pas des clones réels) vers `C:\Users\oscar\...`
 - Deux comptes GitHub distincts : `StudioDescartes` pour SD, `oscardcstudio-cell` pour tout le reste — vérifier le remote avant push
