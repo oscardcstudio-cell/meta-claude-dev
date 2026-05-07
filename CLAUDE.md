@@ -120,7 +120,20 @@ Routine schedulee hebdomadaire sur les projets actifs qui detecte : nouveaux fic
 Modele de routine : Auto-Polymarket `trig_0198tTQrATeMpeBEgaifUNqR` (lundi 8h Paris).
 Quand un audit remonte des corrections universelles → les remonter ici, pas les garder dans le CLAUDE.md projet.
 
-**6. Signal de dette documentaire en session**
+**6. Où placer une règle (décision obligatoire avant tout ajout)**
+
+Question test : *"Si je supprime cette ligne, Claude ferait-il des erreurs sur des tâches routinières ?"* Si non → ne pas la mettre dans CLAUDE.md.
+
+| Critère | Inline CLAUDE.md | Fichier séparé / skill |
+|---|---|---|
+| S'applique à chaque tâche | ✅ | — |
+| Procédure multi-lignes déclenchée par un événement | — | ✅ |
+| Affecter toutes les décisions proactivement | ✅ | — |
+| Pertinent seulement dans un contexte précis | — | ✅ |
+
+Règles techniques : CLAUDE.md < 200 lignes. `@import` n'est PAS du chargement conditionnel (même coût token qu'inline). Seuls les **skills** (`.claude/skills/`) sont vraiment à la demande.
+
+**7. Signal de dette documentaire en session**
 Quand Claude est contraint de lire un fichier source pour comprendre un comportement qui aurait du etre documente (branchement non evident, cas particulier silencieux, voie alternative non mentionnee dans le CLAUDE.md), il doit :
 1. **Le signaler explicitement** : "j'ai du lire X pour trouver Y — ca manque dans la doc"
 2. **Spawner une tache** (chip) pour ajouter le commentaire/gotcha au bon endroit (CLAUDE.md projet ou commentaire inline)
