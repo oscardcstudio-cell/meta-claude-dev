@@ -2,6 +2,9 @@
 studio_descartes/
 oscardcstudio/
 
+# Configs Claude Code locaux (permissions machine-specific, worktrees)
+.claude/
+
 # Junction inverse vers user scope (~/.claude/)
 .claude-user/
 
