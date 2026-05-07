@@ -47,10 +47,13 @@ Si un projet recommence a accumuler du bruit dans son `settings.local.json`, ouv
 
 ## 5. Prompt caching — audit apps API
 
-**Etat** : à faire.
-**Fichiers** : `subvention_match/server/`, `studio-descartes-slack-bot/index.ts`
+**Etat** : fait (mai 2026).
 
-Vérifier que le system prompt ne change pas à chaque requête (date injectée, état utilisateur). Si oui → déplacer le contenu dynamique dans les messages, garder le system prompt stable. Impact : cache hit rate + coût + latence.
+Résultats de l'audit :
+- `subvention_match/server/` → utilise DeepSeek (pas Claude), system prompts statiques. Rien à faire.
+- `studio-descartes-slack-bot/index.ts` → utilisait `buildOrchestratorSystem(userId)` (dynamique). Refactorisé : `ORCHESTRATOR_SYSTEM` est maintenant une constante, l'identité de l'interlocuteur est injectée dans le premier message user. ✓
+
+**Note** : les deux apps passent par OpenRouter, pas l'API Anthropic directe → le caching Anthropic (`cache_control`) n'est pas disponible. Le vrai gain viendrait d'une migration vers l'API Anthropic directe + ajout des headers `cache_control`. À considérer si les coûts LLM deviennent significatifs.
 
 ---
 
