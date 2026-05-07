@@ -67,6 +67,23 @@ Quand Claude compresse une longue session, toujours conserver : liste complète 
 - Preferer editer un fichier existant que d'en creer un nouveau
 - Pas de commentaires de code inutiles (le nom des fonctions suffit)
 
+### Lock files Node.js — npm vs bun (cross-projet, IMPORTANT)
+
+**Regle absolue** : sur tout projet Node.js qui a `package-lock.json`, ajouter ou changer une dependance se fait **toujours avec `npm install`** (pas `bun install` seul), meme si bun est installe et plus rapide.
+
+**Pourquoi** :
+- `bun install` met a jour `bun.lock` mais **ne touche pas `package-lock.json`**.
+- Railway, Vercel, la plupart des CI Node deploient avec `npm ci` qui exige une consistence stricte entre `package.json` et `package-lock.json`. Si le lock est obsolete, `npm ci` echoue immediatement (build broken).
+- Symptome typique : build CI/Railway "Missing packages" sur des deps qui sont pourtant dans `node_modules` localement. Plusieurs deploys consecutifs echouent silencieusement pendant que le projet semble OK en local.
+
+**Reflexes a avoir** :
+1. Apres tout ajout/changement de dependance dans `package.json`, executer `npm install` (pas seulement bun).
+2. Avant tout `git push` qui touche les deps, verifier `git status` : si `package.json` est modifie mais pas `package-lock.json`, c'est un bug en attente. Run `npm install` avant de commit.
+3. Si un projet a SEULEMENT `bun.lock` (pas de `package-lock.json`) et que le CI utilise bun → OK, bun install suffit. Mais c'est rare.
+4. En cas de doute : ouvrir le `Dockerfile` / `railway.json` / `nixpacks.toml` / `.github/workflows/*.yml` du projet pour voir quel install command est utilise par le CI.
+
+**Origine de la regle** : Auto-Polymarket, mai 2026 — j'ai utilise `bun install` apres avoir ajoute @polymarket/builder-relayer-client + 3 autres deps. Railway a echoue 4 deploys consecutifs (~3h perdues), le bot continuait a tourner avec l'ancien code, le kill switch s'est declenche faussement parce que le code V2 ne s'executait pas. Fix : `npm install` + commit `package-lock.json`.
+
 ## Context Engineering — doctrine transverse
 
 Le **context engineering** est la discipline de rendre le codebase navigable et lisible pour les agents Claude, afin de reduire les erreurs, les lectures inutiles, et les regressions silencieuses. C'est un domaine etabli (Martin Fowler, Anthropic engineering blog, standard `llms.txt`).
@@ -110,6 +127,15 @@ Tout bloc desactive en dur (`if (false)`, feature flag off, dead branch) → com
 Routine schedulee hebdomadaire sur les projets actifs qui detecte : nouveaux fichiers > 300 lignes non documentes, fichiers > 2000 lignes sans index, descriptions obsoletes.
 Modele de routine : Auto-Polymarket `trig_0198tTQrATeMpeBEgaifUNqR` (lundi 8h Paris).
 Quand un audit remonte des corrections universelles → les remonter ici, pas les garder dans le CLAUDE.md projet.
+
+**6. Signal de dette documentaire en session**
+Quand Claude est contraint de lire un fichier source pour comprendre un comportement qui aurait du etre documente (branchement non evident, cas particulier silencieux, voie alternative non mentionnee dans le CLAUDE.md), il doit :
+1. **Le signaler explicitement** : "j'ai du lire X pour trouver Y — ca manque dans la doc"
+2. **Spawner une tache** (chip) pour ajouter le commentaire/gotcha au bon endroit (CLAUDE.md projet ou commentaire inline)
+3. **Ne pas absorber silencieusement** : chaque lecture forcee = dette a rembourser dans le meme commit ou le suivant
+
+Objectif : chaque session qui revele une faille de documentation la comble, sans attendre l'audit periodique.
+Exemple : graduation d'une parallel scanner strategy (Auto-Polymarket, mai 2026) — `dischargeStrategy()` ne fonctionne pas, il faut modifier `config.js` directement. Non documente → lecture de fichier a mi-session → tokens perdus.
 
 ### Outils utiles
 
