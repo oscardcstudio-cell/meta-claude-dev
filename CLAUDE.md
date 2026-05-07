@@ -70,23 +70,6 @@ Si une leçon/piège technique appris sur un projet peut affecter d'autres proje
 - Preferer editer un fichier existant que d'en creer un nouveau
 - Pas de commentaires de code inutiles (le nom des fonctions suffit)
 
-### Lock files Node.js — npm vs bun (cross-projet, IMPORTANT)
-
-**Regle absolue** : sur tout projet Node.js qui a `package-lock.json`, ajouter ou changer une dependance se fait **toujours avec `npm install`** (pas `bun install` seul), meme si bun est installe et plus rapide.
-
-**Pourquoi** :
-- `bun install` met a jour `bun.lock` mais **ne touche pas `package-lock.json`**.
-- Railway, Vercel, la plupart des CI Node deploient avec `npm ci` qui exige une consistence stricte entre `package.json` et `package-lock.json`. Si le lock est obsolete, `npm ci` echoue immediatement (build broken).
-- Symptome typique : build CI/Railway "Missing packages" sur des deps qui sont pourtant dans `node_modules` localement. Plusieurs deploys consecutifs echouent silencieusement pendant que le projet semble OK en local.
-
-**Reflexes a avoir** :
-1. Apres tout ajout/changement de dependance dans `package.json`, executer `npm install` (pas seulement bun).
-2. Avant tout `git push` qui touche les deps, verifier `git status` : si `package.json` est modifie mais pas `package-lock.json`, c'est un bug en attente. Run `npm install` avant de commit.
-3. Si un projet a SEULEMENT `bun.lock` (pas de `package-lock.json`) et que le CI utilise bun → OK, bun install suffit. Mais c'est rare.
-4. En cas de doute : ouvrir le `Dockerfile` / `railway.json` / `nixpacks.toml` / `.github/workflows/*.yml` du projet pour voir quel install command est utilise par le CI.
-
-**Origine de la regle** : Auto-Polymarket, mai 2026 — j'ai utilise `bun install` apres avoir ajoute @polymarket/builder-relayer-client + 3 autres deps. Railway a echoue 4 deploys consecutifs (~3h perdues), le bot continuait a tourner avec l'ancien code, le kill switch s'est declenche faussement parce que le code V2 ne s'executait pas. Fix : `npm install` + commit `package-lock.json`.
-
 ## Context Engineering — doctrine transverse
 
 Le **context engineering** est la discipline de rendre le codebase navigable et lisible pour les agents Claude, afin de reduire les erreurs, les lectures inutiles, et les regressions silencieuses. C'est un domaine etabli (Martin Fowler, Anthropic engineering blog, standard `llms.txt`).
