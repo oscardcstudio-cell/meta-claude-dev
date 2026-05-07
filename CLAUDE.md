@@ -59,6 +59,12 @@ Quand Claude compresse une longue session, toujours conserver : liste complète 
 ### Propagation de gotchas cross-projet
 Si une leçon/piège technique appris sur un projet peut affecter d'autres projets de la machine → l'ajouter dans [`GOTCHAS.md`](GOTCHAS.md) (même dossier que ce fichier). Ne pas mettre de détails techniques dans CLAUDE.md.
 
+### Philosophie du bug — règles universelles (mai 2026)
+
+- **Chaque bugfix non-trivial** → ajouter un check au health check du projet + invariant si bug statique → voir [`CLAUDE_BUG_DOCTRINE.md`](CLAUDE_BUG_DOCTRINE.md)
+- **5 Whys avant d'écrire le fix** → la cause racine n'est jamais une personne → voir [`CLAUDE_BUG_DOCTRINE.md`](CLAUDE_BUG_DOCTRINE.md)
+- **Root cause one-liner dans chaque commit** : `Root cause: <cause systémique en une phrase>`
+
 ### Optimisation tokens (cross-projet)
 - Ne pas relire un fichier deja lu dans la meme conversation sans raison
 - Preferer `Grep` / `Glob` cibles aux lectures de repertoires entiers
