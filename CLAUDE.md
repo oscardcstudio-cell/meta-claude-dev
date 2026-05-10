@@ -6,26 +6,7 @@ Ce fichier est le **meta racine** de tout le travail Claude sur cette machine. I
 
 **Usage** : regles, preferences, optimisations et infrastructures qui doivent s'appliquer **cross-projet** (peu importe l'entreprise). Rien d'entreprise-specifique ici — ca vit dans le CLAUDE.md de chaque dossier projet (`studio_descartes\`, `oscardcstudio\`).
 
-## Arborescence
-
-```
-C:\dev\claude\                      <- racine meta (ce fichier)
-|-- CLAUDE.md                       <- meta cross-projets (celui-ci)
-|-- .claudeignore                   <- exclusions globales (node_modules, .env, assets lourds)
-|-- studio_descartes\               <- dossier entreprise SD (repo parent + sous-repos)
-|   |-- CLAUDE.md                   <- meta SD (marque, guide editorial, charte)
-|   |-- philo_runner\, studio-descartes-da\, -social\, -centre-appel\, -info\, -questionnaire\
-|   |-- claude-agents\              <- personas brandees SD (jules/florian/oscar/philosophe)
-|   |-- push-all.sh                 <- push all repos SD
-|   `-- ... (autres repos SD)
-`-- oscardcstudio\                  <- dossier projets persos (repos physiques)
-    |-- CLAUDE.md                   <- meta perso (compte GitHub perso, regles)
-    |-- .gitignore                  <- protection transverse dossier projet perso
-    |-- push-all.sh                 <- push all repos perso
-    |-- Auto_Polymarket\, subvention_match\, Sync-Play\
-```
-
-Les **meta-agents generiques** (moteurs business/marketing/creation/philosophe) vivent dans `C:\Users\oscar\.claude\agents\meta-*.md` (user scope, charges automatiquement par Claude Code partout). Voir section "Meta-agents" plus bas.
+Deux dossiers : `studio_descartes\` (org SD) et `oscardcstudio\` (perso, junctions vers repos physiques). Meta-agents generiques dans `C:\Users\oscar\.claude\agents\`.
 
 ## Hierarchie de chargement CLAUDE.md
 
@@ -120,18 +101,19 @@ Routine schedulee hebdomadaire sur les projets actifs qui detecte : nouveaux fic
 Modele de routine : Auto-Polymarket `trig_0198tTQrATeMpeBEgaifUNqR` (lundi 8h Paris).
 Quand un audit remonte des corrections universelles → les remonter ici, pas les garder dans le CLAUDE.md projet.
 
-**6. Où placer une règle (décision obligatoire avant tout ajout)**
+**6. Où placer une règle (séquence obligatoire avant tout ajout à un CLAUDE.md)**
 
-Question test : *"Si je supprime cette ligne, Claude ferait-il des erreurs sur des tâches routinières ?"* Si non → ne pas la mettre dans CLAUDE.md.
+Avant d'écrire quoi que ce soit dans un CLAUDE.md projet, classer d'abord :
 
-| Critère | Inline CLAUDE.md | Fichier séparé / skill |
-|---|---|---|
-| S'applique à chaque tâche | ✅ | — |
-| Procédure multi-lignes déclenchée par un événement | — | ✅ |
-| Affecter toutes les décisions proactivement | ✅ | — |
-| Pertinent seulement dans un contexte précis | — | ✅ |
+1. **Règle qui change chaque décision routinière** → CLAUDE.md (court, 1-3 lignes max)
+2. **Référence / inventaire / liste** → `docs/` ou `CLAUDE_REFERENCE.md` + pointeur dans CLAUDE.md
+3. **Workflow / procédure > 5 lignes** → skill `.claude/skills/` ou `docs/`
+4. **État projet / backlog / statut** → `memory/` ou git log
+5. **Doublon d'un CLAUDE.md parent** → supprimer (l'héritage est automatique)
 
-Règles techniques : CLAUDE.md < 200 lignes. `@import` n'est PAS du chargement conditionnel (même coût token qu'inline). Seuls les **skills** (`.claude/skills/`) sont vraiment à la demande.
+Test final : *"Si je supprime cette ligne, Claude ferait-il des erreurs sur des tâches routinières ?"* Si non → ça n'appartient pas au CLAUDE.md.
+
+Règles techniques : CLAUDE.md < 200 lignes. Un hook PreToolUse rappelle ce framework à chaque édition. Un hook PostToolUse bloque si dépassement. `@import` n'est PAS du chargement conditionnel (même coût token qu'inline). Seuls les **skills** (`.claude/skills/`) sont vraiment à la demande.
 
 **7. Signal de dette documentaire en session**
 Quand Claude est contraint de lire un fichier source pour comprendre un comportement qui aurait du etre documente (branchement non evident, cas particulier silencieux, voie alternative non mentionnee dans le CLAUDE.md), il doit :
@@ -141,14 +123,6 @@ Quand Claude est contraint de lire un fichier source pour comprendre un comporte
 
 Objectif : chaque session qui revele une faille de documentation la comble, sans attendre l'audit periodique.
 Exemple : graduation d'une parallel scanner strategy (Auto-Polymarket, mai 2026) — `dischargeStrategy()` ne fonctionne pas, il faut modifier `config.js` directement. Non documente → lecture de fichier a mi-session → tokens perdus.
-
-### Outils utiles
-
-| Outil | Usage | Lien |
-|-------|-------|------|
-| **Repomix** | Packager tout le repo en un fichier AI-friendly pour analyse globale ponctuelle | https://repomix.com |
-| **Claude Context MCP** | Recherche semantique sur le codebase (~40% reduction tokens vs grep manuel) | https://github.com/zilliztech/claude-context |
-| `gsd:map-codebase` | Audit ponctuel complet (skill local) | — |
 
 ### Propagation vers les projets existants
 
