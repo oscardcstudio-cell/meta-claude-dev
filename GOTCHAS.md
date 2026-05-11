@@ -82,6 +82,19 @@ cmds = ["npm install --omit=dev"]
 
 ---
 
+## Railway / serve v14 — clean URLs redirigent `.html` → 404
+
+**Symptôme** : `GET /page.html` retourne 301 vers `/page`, puis `/page` retourne 404.
+**Cause** : `serve` v14 active les clean URLs par défaut — il strip l'extension `.html` et redirige. Mais le fichier cible sans extension n'existe pas, d'où le 404.
+**Fix** : créer `serve.json` à la racine du repo :
+```json
+{ "cleanUrls": false }
+```
+**Règle** : tout nouveau repo SD qui utilise `serve` pour Railway → inclure `serve.json` dès le setup.
+**Origine** : studio-descartes-info, mai 2026.
+
+---
+
 ## Railway — volumes CLI (Windows)
 
 **Symptôme** : `railway volume add --mount-path /data` échoue avec "Mount path must start with a `/`" depuis bash Windows — le CLI strippe le slash.
