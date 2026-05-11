@@ -37,7 +37,12 @@ railway up studio-descartes-dashboard --path-as-root --service sd-dashboard --de
 ```
 `--path-as-root` force Railway à utiliser le contenu du sous-dossier comme racine de l'archive, sans remonter au repo git parent. Le `rootDirectory` côté Railway doit rester vide (`""`) — ne pas le setter à `studio-descartes-dashboard` (Railway cherche alors un sous-dossier dans l'archive, mais il n'existe pas car `--path-as-root` l'a déjà aplatit).
 **Réflexe** : si deploy fail avec ce message → vérifier que la commande utilise bien `--path-as-root` + que `rootDirectory` est vide dans Railway (API ou dashboard).
-**Origine** : studio-descartes-dashboard, mai 2026.
+**Origine** : studio-descartes-dashboard, mai 2026. Confirmé sur studio-descartes-info, mai 2026.
+**Corollaire** : même quand le sous-repo a son propre `.git`, `railway up` depuis ce dossier remonte quand même au repo git parent. `--path-as-root` est obligatoire pour TOUS les sous-repos SD, sans exception. La commande canonique :
+```
+cd C:/dev/claude/studio_descartes
+railway up <nom-sous-repo> --path-as-root --service <service-name>
+```
 
 ---
 
