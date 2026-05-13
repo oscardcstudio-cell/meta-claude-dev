@@ -1,0 +1,14 @@
+# nonprofit-ai-lab
+> Exploration : machine à fabriquer des IA spécialisées pour le domaine associatif. Couvre le cycle de vie complet (groupe informel → asso déclarée → vie courante → crise).
+
+## Statut
+Pré-projet. Phase recherche / cadrage. À migrer vers un repo dédié `oscardcstudio-cell/nonprofit-ai-lab` quand prêt (créé depuis ordi).
+
+## Fichiers
+- [RESEARCH-landscape-2026-05.md](RESEARCH-landscape-2026-05.md) : état des lieux de l'IA dans le secteur associatif (mai 2026) — acteurs FR/intl, recherche académique, AI for Good, 5 niches non couvertes, verdict stratégique.
+
+## Points à retenir
+- Marché US saturé sur fundraising IA / grant writing IA. France peu couverte au niveau produit (Eudonet seul CRM avec IA intégrée).
+- Solidatech, IA for Good (Latitudes + Share IT), Data for Good = écosystème FR de sensibilisation, pas de produit.
+- Concept "générateur d'IA contextualisée par asso" + "cycle de vie complet" : niche vide, ni FR ni intl.
+- Voisin direct à surveiller : projet Data for Good "IA for Good (appels à projets)" — adjacent à subvention_match.
