@@ -5,6 +5,7 @@
 - [CLAUDE.md](CLAUDE.md): Instructions cross-projets : git multi-compte, doctrine context engineering, meta-agents génériques, dashboards registry, push-all
 - [CLAUDE_HEALTH_RULES.md](CLAUDE_HEALTH_RULES.md): Règles de santé des fichiers CLAUDE.md (seuils, anti-patterns, hook auto)
 - [SETUP_NOUVEL_ORDI.md](SETUP_NOUVEL_ORDI.md): Procédure d'installation complète d'une nouvelle machine
+- [MIGRATION_CLAUDE_TEAM.md](MIGRATION_CLAUDE_TEAM.md): Bascule compte Anthropic Pro -> Team avec checklist post-migration
 
 ## Structure
 - [studio_descartes/](studio_descartes/): Bucket entreprise SD — repos + meta SD
