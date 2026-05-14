@@ -1,0 +1,43 @@
+{
+  "name": "NOM DE TON ENTREPRISE",
+  "legal_name": "NOM JURIDIQUE COMPLET",
+  "legal_form": "SAS / SARL / EI / EURL / ...",
+  "creation_date": "YYYY-MM-DD",
+  "capital": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "address": {
+    "street": "N° rue",
+    "postal_code": "75000",
+    "city": "Ville",
+    "country": "France"
+  },
+  "identifiers": {
+    "siren": "",
+    "siret": "",
+    "tva": "",
+    "naf": ""
+  },
+  "contact": {
+    "email": "contact@tonentreprise.com",
+    "website": "tonentreprise.com"
+  },
+  "activity": "Description courte de l'activité",
+  "fiscal_year": {
+    "start": "01-01",
+    "end": "12-31"
+  },
+  "external_contacts": {
+    "lawyer": {
+      "name": "",
+      "email": ""
+    },
+    "accountant": {
+      "firm": "",
+      "name": "",
+      "email": ""
+    }
+  },
+  "bank": ""
+}

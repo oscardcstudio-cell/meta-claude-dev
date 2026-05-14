@@ -1,0 +1,12 @@
+{
+  "founders": [
+    {
+      "name": "Prénom Nom",
+      "role": "Rôle (ex: Fondateur, CEO, CTO, ...)",
+      "email": "prenom@tonentreprise.com",
+      "phone": ""
+    }
+  ],
+  "employees": [],
+  "freelancers": []
+}
