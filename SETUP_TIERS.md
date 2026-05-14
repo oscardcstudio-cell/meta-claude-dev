@@ -8,16 +8,26 @@ Guide pour installer l'environnement de travail Claude sur un ordi neuf.
 ## Arborescence cible
 
 ```
-C:\Users\<user>\.claude\     ← user scope (CLAUDE.md global, skills, agents, hooks)
-                                repo : ton-compte/dotclaude
+C:\Users\<user>\.claude\          ← user scope (CLAUDE.md global, skills, agents, hooks)
+                                     repo : ton-compte/dotclaude
 
-C:\dev\claude\               ← meta machine (cross-projets)
-|-- CLAUDE.md                ← règles cross-projets
-|-- company/                 ← infos de ton entreprise (à remplir)
+C:\dev\claude\                    ← meta machine (cloné depuis meta-claude-dev)
+|-- CLAUDE.md                     ← règles cross-projets (chargé automatiquement)
+|-- company/                      ← infos de ton entreprise (à remplir — voir étape 6)
+|   |-- info.json
+|   |-- team.json
+|   `-- brand/
+|       |-- plateforme.md
+|       `-- guide_editorial.md
 |-- GOTCHAS.md, SETUP_TIERS.md
 |
-`-- <ton-bucket>/            ← tes projets (pas versionné ici, add dans .gitignore)
+`-- mes-projets\                  ← tes repos (ignoré par git — voir étape 7)
+    |-- bar-a-vin\                ← ex : git clone ici
+    `-- autre-projet\
 ```
+
+`company/` et `mes-projets/` sont **au même niveau** dans `C:\dev\claude\`.
+`company/` est versionné dans meta-claude-dev. `mes-projets/` ne l'est pas (`.gitignore`).
 
 ---
 
@@ -125,13 +135,28 @@ Voir `company/README.md` pour le détail.
 
 ## 7. Tes projets
 
-Ajoute tes repos dans un sous-dossier (ex: `C:\dev\claude\monprojet\`).
-Ce sous-dossier doit être dans `.gitignore` du meta machine (déjà configuré pour `studio_descartes/` et `oscardcstudio/` — ajouter le tien sur le même modèle).
+Crée un dossier bucket pour tes projets dans `C:\dev\claude\`, puis déclare-le dans `.gitignore` pour qu'il ne soit pas versionné dans meta-claude-dev.
 
 ```bash
 cd /c/dev/claude
-git clone https://github.com/ton-compte/mon-projet.git monprojet
+
+# 1. Créer le dossier bucket
+mkdir mes-projets
+
+# 2. L'ajouter au .gitignore du meta (une seule fois)
+echo "mes-projets/" >> .gitignore
+git add .gitignore && git commit -m "ignore: add mes-projets bucket"
+
+# 3. Cloner tes repos dedans
+cd mes-projets
+git clone https://github.com/ton-compte/bar-a-vin.git bar-a-vin
+git clone https://github.com/ton-compte/autre-projet.git autre-projet
 ```
+
+Quand tu ouvres Claude dans `C:\dev\claude\mes-projets\bar-a-vin\`, il charge automatiquement :
+- `~/.claude/CLAUDE.md` (user scope)
+- `C:\dev\claude\CLAUDE.md` (meta machine, avec `company/`)
+- `C:\dev\claude\mes-projets\bar-a-vin\CLAUDE.md` (ton repo, si présent)
 
 ---
 
