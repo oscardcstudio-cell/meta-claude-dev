@@ -79,30 +79,17 @@ claude auth
 
 ## 4. User scope (~/.claude/)
 
-Claude Code crée `~/.claude/` automatiquement au premier lancement. Il suffit d'y ajouter un `CLAUDE.md` avec tes préférences globales.
+Le user scope contient le CLAUDE.md global, les skills, agents, hooks et settings.
 
 ```bash
-# Créer le fichier de préférences globales
-mkdir -p ~/.claude
+# Si ~/.claude/ existe déjà, le supprimer d'abord :
+rm -rf ~/.claude
+git clone https://github.com/oscardcstudio-cell/dotclaude.git ~/.claude
 ```
 
-Puis créer `~/.claude/CLAUDE.md` avec au minimum :
+Contient : meta-agents génériques (business, marketing, création, philosophe, UI/UX), hooks de sécurité, skills, settings.json.
 
-```markdown
-# Préférences globales
-
-## Communication
-- Réponds en français
-- Réponses directes, pas de préambules
-
-## Git
-- Auto-push après commit significatif
-
-## Mon profil
-- [Décris-toi en 2 lignes : ton métier, ton niveau technique]
-```
-
-C'est suffisant pour démarrer. Tu étoffes au fil du temps.
+**Après le clone**, éditer `~/.claude/CLAUDE.md` pour remplacer les infos personnelles par les tiennes (nom, profil, préférences).
 
 ---
 
