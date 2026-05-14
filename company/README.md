@@ -1,36 +1,61 @@
 # company/ — Contexte entreprise pour Claude
 
-Ce dossier centralise les infos de ton entreprise. Claude les charge automatiquement pour contextualiser toutes les demandes business, brand et rédaction.
+Ce dossier centralise les infos de ton entreprise. Claude les charge automatiquement pour contextualiser toutes les demandes business, brand, rédaction, stratégie et juridique.
 
-## Fichiers à remplir
+## Structure complète
 
 ```
 company/
-  info.json               ← Infos légales : nom, SIRET, adresse, contacts, compta, avocat
-  team.json               ← Équipe : fondateurs, salariés, freelances
-  brand/
-    plateforme.md         ← WHY/WHAT/HOW, valeurs, positionnement, cibles, concurrence
-    guide_editorial.md    ← Ton, vocabulaire, interdits, formats par canal
+│
+├── info.json                     ← Infos légales : nom, SIRET, adresse, contacts, compta, avocat
+├── team.json                     ← Équipe : fondateurs, salariés, freelances
+│
+├── brand/                        ← IDENTITÉ, ÉCRITURE & VISUEL
+│   ├── plateforme.md             ← WHY/WHAT/HOW, valeurs, positionnement, bénéfices clients
+│   ├── manifesto.md              ← Texte fondateur, tagline
+│   ├── fondations.md             ← Origine du nom, mythe fondateur, ambition
+│   ├── guide_editorial.md        ← Ton, vocabulaire, interdits, formats par canal ← OBLIGATOIRE
+│   ├── cibles.md                 ← Segments prioritaires avec besoins, freins, canaux
+│   ├── concurrence.md            ← Mapping concurrentiel, positionnement, codes de catégorie
+│   ├── personas.md               ← Portraits clients détaillés
+│   ├── charte.md                 ← Couleurs, typographie, logo, règles d'usage
+│   └── direction_artistique.md   ← Univers visuel, références, règles photo/vidéo
+│
+├── strategie/                    ← STRATÉGIE & FINANCE
+│   ├── business_plan.md          ← Résumé exécutif, modèle éco, chiffres clés, roadmap
+│   ├── pitch_deck.md             ← Structure narrative du pitch (9 slides)
+│   ├── plan_financier.md         ← Prévisionnel 3 ans, BFR, hypothèses
+│   └── subventions.md            ← Suivi des aides obtenues / en cours / à cibler
+│
+├── marketing/                    ← MARKETING & COM
+│   ├── plan_marketing.md         ← Objectifs, canaux, campagnes, budget
+│   └── calendrier_editorial.md   ← Piliers de contenu, rythme, dates clés
+│
+├── juridique/                    ← JURIDIQUE & GOUVERNANCE
+│   ├── statuts.md                ← Résumé gouvernance, actionnariat, clauses importantes
+│   └── pacte_associes.md         ← Résumé pacte (pas le document confidentiel)
+│
+└── projets/                      ← PROJETS EN COURS
+    └── TEMPLATE_PROJET.md        ← Copier pour chaque projet
 ```
 
-## Comment ça marche
+## Par où commencer
 
-Une fois les fichiers remplis, Claude sait :
-- Qui tu es et ce que fait ton entreprise
-- À qui vous parlez et comment
-- Ton style d'écriture et ce que tu ne dis jamais
-- Tes contacts clés (compta, avocat, équipe)
+**Priorité 1 — ce que Claude utilise le plus souvent :**
+1. `info.json` — infos légales de base
+2. `team.json` — équipe
+3. `brand/plateforme.md` — qui vous êtes et pourquoi
+4. `brand/guide_editorial.md` — comment vous parlez
 
-**Tu n'as plus besoin de réexpliquer le contexte à chaque session.**
+**Priorité 2 — pour les demandes stratégiques :**
+5. `brand/cibles.md` — pour qui vous écrivez
+6. `strategie/business_plan.md` — contexte financier
 
-## Optionnel — fichiers supplémentaires
-
-Tu peux ajouter dans `brand/` :
-- `charte.md` — couleurs, typo, visuels
-- `offre.md` — détail de tes produits/services
-- `presentations.md` — textes prêts à l'emploi (bio Instagram, pitch court, pitch long)
-- `projets.md` — projets en cours ou à venir
+**Priorité 3 — pour les demandes spécialisées :**
+- `brand/charte.md` → quand vous travaillez sur des visuels
+- `strategie/subventions.md` → quand vous montez des dossiers
+- `juridique/` → quand vous avez des questions de gouvernance
 
 ## Sécurité
 
-Ce dossier est versionné dans git. **Ne jamais mettre de mots de passe, tokens ou clés API ici** — utilise `.env` dans chaque projet pour ça.
+Ce dossier est versionné dans git. **Ne jamais mettre de mots de passe, tokens ou clés API ici** — utilisez `.env` dans chaque projet pour ça. Pour le pacte d'associés, mettre uniquement un résumé (pas le document confidentiel complet).
