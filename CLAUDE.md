@@ -56,7 +56,6 @@ Si une leçon/piège technique appris sur un projet peut affecter d'autres proje
 - Ne pas creer de fichiers de doc (.md) sauf demande explicite ou necessite claire (MIGRATION, MODULE, CLAUDE)
 - Preferer editer un fichier existant que d'en creer un nouveau
 - Pas de commentaires de code inutiles (le nom des fonctions suffit)
-- Si `company/` existe, charger ses fichiers pour tout contexte business/brand (voir [`company/README.md`](company/README.md)). `guide_editorial.md` obligatoire avant tout texte au nom de l'entreprise.
 
 ## Context Engineering — doctrine transverse
 
