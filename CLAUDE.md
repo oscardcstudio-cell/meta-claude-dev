@@ -66,12 +66,12 @@ Origine sur ce repo : audit de lisibilite Auto-Polymarket (mai 2026). Toutes les
 ### Les 5 standards a respecter dans chaque projet
 
 **1. CLAUDE.md precis**
-- Chaque fichier critique (> 300 lignes) liste avec sa vraie responsabilite — pas ce qu'on pensait qu'il faisait
-- La description doit reflechir ou la logique se trouve REELLEMENT (`engine.js` ne fait pas le sizing si le sizing est dans `sizeCalc.js`)
-- Quand un nouveau fichier critique est cree → l'ajouter au CLAUDE.md dans le meme commit
+- Fichiers critiques (> 300 lignes) → descriptions dans **llms.txt** (pas CLAUDE.md). CLAUDE.md = règles de comportement, pas inventaire.
+- La description doit refleter ou la logique se trouve REELLEMENT (`engine.js` ne fait pas le sizing si le sizing est dans `sizeCalc.js`)
+- Quand un nouveau fichier critique est cree → l'ajouter dans llms.txt dans le meme commit
 
 **2. `llms.txt` a la racine du repo**
-Fichier de navigation pour tout agent arrivant a froid (remote agent, nouveau contexte). Different de CLAUDE.md : CLAUDE.md = instructions, `llms.txt` = carte.
+Fichier de navigation pour tout agent arrivant a froid. CLAUDE.md = règles, `llms.txt` = carte + **inventaire unique** des fichiers sources. Ne pas dupliquer cet inventaire dans CLAUDE.md. Un hook PostToolUse signale si un fichier listé est modifié sans mise à jour des docs.
 Template minimal :
 ```markdown
 # Nom du projet
@@ -136,7 +136,7 @@ Exemple : graduation d'une parallel scanner strategy (Auto-Polymarket, mai 2026)
 
 **Checklist par projet (a cocher a chaque nouveau projet ou audit annuel) :**
 - [ ] `llms.txt` present a la racine
-- [ ] Tous les fichiers > 300 lignes listes dans CLAUDE.md avec description precise
+- [ ] Tous les fichiers > 300 lignes listes dans llms.txt avec description precise
 - [ ] Fichiers > 2000 lignes avec index de sections en tete
 - [ ] Blocs desactives commentes
 - [ ] Routine d'audit schedulee (si projet actif avec commits reguliers)
