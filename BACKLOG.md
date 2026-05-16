@@ -75,6 +75,22 @@ Ajouter un `CLAUDE.md` dans `agent/` (règles ElevenLabs sync + validation philo
 
 ---
 
+## 8. Fuite PAT dans `.git/config` du repo meta-claude-dev
+
+**Etat** : à corriger.
+**Fichier** : `C:\dev\claude\.git\config`
+**Détecté** : 2026-05-16, en initialisant Nothing_But_Blue_Sky.
+
+Le remote `origin` du repo `meta-claude-dev` (racine `C:\dev\claude\`) contient un Personal Access Token GitHub en clair dans l'URL : `https://oscardcstudio-cell:github_pat_...@github.com/...`. Visible par toute personne ayant accès au disque.
+
+**Action** :
+1. Révoquer le PAT côté GitHub (https://github.com/settings/tokens)
+2. Réécrire le remote : `git -C "C:/dev/claude" remote set-url origin https://github.com/oscardcstudio-cell/meta-claude-dev.git`
+3. Vérifier que `gh` (keyring) gère l'auth sans PAT inline
+4. Auditer les autres repos pour le même pattern : `grep -r "github_pat_" C:/dev/claude/**/.git/config`
+
+---
+
 ---
 
 ## Convention BACKLOG par projet
